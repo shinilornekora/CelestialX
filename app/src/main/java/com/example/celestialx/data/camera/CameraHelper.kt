@@ -39,7 +39,6 @@ class CameraHelper(private val context: Context) {
     private var recording: Recording? = null
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var previewView: PreviewView? = null
-    private val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
     fun takePhoto() {
         Log.d(TAG, "Attempting to take a photo.")
