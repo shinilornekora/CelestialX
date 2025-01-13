@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
 import com.example.celestialx.data.camera.CameraHelper
 import com.example.celestialx.databinding.ActivityMainBinding
 
