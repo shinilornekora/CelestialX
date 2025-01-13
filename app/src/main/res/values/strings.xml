@@ -3,4 +3,9 @@
     <string name="start_capture">Start</string>
     <string name="take_photo">Shot</string>
     <string name="stop_capture">Stop Capture</string>
+    <string name="switch_camera">Switch camera</string>
+    <string name="go_to_video">Switch to video</string>
+    <string name="go_to_photo">Switch to photo</string>
+    <string name="go_to_gallery">Gallery</string>
+    <string name="animal_desc">Just an animal.</string>
 </resources>

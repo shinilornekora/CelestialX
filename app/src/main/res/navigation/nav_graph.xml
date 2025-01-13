@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/photoFragment">
+
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.example.celestialx.presentation.fragments.PhotoFragment"
+        tools:layout="@layout/photo_fragment">
+        <action
+            android:id="@+id/action_photo_to_video"
+            app:destination="@id/videoFragment" />
+        <action
+            android:id="@+id/action_photo_to_gallery"
+            app:destination="@id/galleryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.example.celestialx.presentation.fragments.VideoFragment"
+        tools:layout="@layout/video_fragment">
+        <action
+            android:id="@+id/action_video_to_photo"
+            app:destination="@id/photoFragment" />
+        <action
+            android:id="@+id/action_video_to_gallery"
+            app:destination="@id/galleryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.celestialx.presentation.fragments.GalleryFragment"
+        tools:layout="@layout/gallery_fragment">
+        <action
+            android:id="@+id/action_gallery_to_photo"
+            app:destination="@id/photoFragment" />
+        <action
+            android:id="@+id/action_gallery_to_video"
+            app:destination="@id/videoFragment" />
+    </fragment>
+</navigation>
