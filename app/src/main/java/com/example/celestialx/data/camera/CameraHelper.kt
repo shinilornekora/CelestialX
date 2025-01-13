@@ -41,10 +41,10 @@ class CameraHelper(private val context: Context) {
     private var previewView: PreviewView? = null
 
     fun takePhoto() {
-        Log.d(TAG, "Attempting to take a photo.")
+        log("Attempting to take a photo.")
 
         val imageCapture = imageCapture ?: run {
-            Log.e(TAG, "ImageCapture is not initialized")
+            errorLog("ImageCapture is not initialized")
             return
         }
 
@@ -64,32 +64,32 @@ class CameraHelper(private val context: Context) {
                 contentValues)
             .build()
 
-        Log.d(TAG, "Basic settings set.")
+        log("Basic settings set.")
 
         imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(context),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
-                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                    errorLog("Photo capture failed: ${exc.message}")
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, msg)
+                    log(msg)
                 }
             }
         )
 
-        Log.d(TAG, "Photo process completed.")
+        log("Photo process completed.")
     }
 
     fun captureVideo(videoCaptureButton: Button) {
-        Log.d(TAG, "Toggling the video state!")
+        log("Toggling the video state!")
 
         val videoCapture = this.videoCapture ?: run {
-            Log.e(TAG, "Video capture does not exist.")
+            errorLog("Video capture does not exist.")
             return
         }
 
@@ -99,7 +99,7 @@ class CameraHelper(private val context: Context) {
         if (curRecording != null) {
             curRecording.stop()
             recording = null
-            Log.d(TAG, "Video is stopped.")
+            log("Video is stopped.")
 
             return
         }
@@ -138,11 +138,11 @@ class CameraHelper(private val context: Context) {
                         if (!recordEvent.hasError()) {
                             val msg = "Video capture succeeded: ${recordEvent.outputResults.outputUri}"
                             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                            Log.d(TAG, msg)
+                            log(msg)
                         } else {
                             recording?.close()
                             recording = null
-                            Log.e(TAG, "Video capture ends with error: ${recordEvent.error}")
+                            errorLog("Video capture ends with error: ${recordEvent.error}")
                         }
                         videoCaptureButton.apply {
                             text = context.getString(R.string.start_capture)
@@ -155,7 +155,7 @@ class CameraHelper(private val context: Context) {
 
     fun startCamera(viewFinder: PreviewView) {
         previewView = viewFinder
-        Log.d(TAG, "Starting the camera.")
+        log("Starting the camera.")
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
 
         cameraProviderFuture.addListener({
@@ -172,16 +172,16 @@ class CameraHelper(private val context: Context) {
             videoCapture = VideoCapture.withOutput(recorder)
             imageCapture = ImageCapture.Builder().build()
 
-            Log.d(TAG, "All basic variables set, time to bind.")
+            log("All basic variables set, time to bind.")
 
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(
                     context as AppCompatActivity, cameraSelector, preview, imageCapture, videoCapture
                 )
-                Log.d(TAG, "Camera has started.")
+                log("Camera has started.")
             } catch (exc: Exception) {
-                Log.e(TAG, "Use case binding failed", exc)
+                errorLog("Use case binding failed")
             }
 
         }, ContextCompat.getMainExecutor(context))
@@ -202,5 +202,13 @@ class CameraHelper(private val context: Context) {
     companion object {
         private const val TAG = "CameraHelper"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+
+        fun log(message: String) {
+            Log.d(TAG, message)
+        }
+
+        fun errorLog(message: String) {
+            Log.e(TAG, message)
+        }
     }
 }

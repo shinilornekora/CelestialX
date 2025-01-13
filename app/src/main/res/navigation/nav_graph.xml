@@ -38,5 +38,17 @@
         <action
             android:id="@+id/action_gallery_to_video"
             app:destination="@id/videoFragment" />
+        <action
+            android:id="@+id/action_gallery_to_preview"
+            app:destination="@id/fullscreenMedia" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fullscreenMedia"
+        android:name="com.example.celestialx.presentation.fragments.FullscreenMediaFragment"
+        tools:layout="@layout/fullscreen_media_fragment">
+        <action
+            android:id="@+id/action_fullscreen_to_gallery"
+            app:destination="@id/galleryFragment" />
     </fragment>
 </navigation>
