@@ -8,4 +8,8 @@
     <string name="go_to_photo">Switch to photo</string>
     <string name="go_to_gallery">Gallery</string>
     <string name="animal_desc">Just an animal.</string>
+    <string name="delete_button">Destroy chosen files</string>
+    <string name="back">Go back</string>
+    <string name="play">Play video</string>
+    <string name="pause">Pause video</string>
 </resources>

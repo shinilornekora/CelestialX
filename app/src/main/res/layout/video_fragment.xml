@@ -53,6 +53,19 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/video_footer" />
 
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/video_footer"
+        app:layout_constraintBottom_toBottomOf="@id/blank"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
     <include
         android:id="@+id/video_footer"
         layout="@layout/video_footer"
