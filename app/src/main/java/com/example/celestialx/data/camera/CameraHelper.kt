@@ -1,13 +1,12 @@
 package com.example.celestialx.data.camera
 
 import android.Manifest
-import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.ImageCapture
@@ -26,8 +25,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
 import java.text.SimpleDateFormat
 import java.util.Locale
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import androidx.camera.video.Recording
 import androidx.camera.view.PreviewView
 import com.example.celestialx.R
@@ -85,7 +82,7 @@ class CameraHelper(private val context: Context) {
         log("Photo process completed.")
     }
 
-    fun captureVideo(videoCaptureButton: Button) {
+    fun captureVideo() {
         log("Toggling the video state!")
 
         val videoCapture = this.videoCapture ?: run {
@@ -93,7 +90,6 @@ class CameraHelper(private val context: Context) {
             return
         }
 
-        videoCaptureButton.isEnabled = false
         val curRecording = recording
 
         if (curRecording != null) {
@@ -128,12 +124,6 @@ class CameraHelper(private val context: Context) {
             }
             .start(ContextCompat.getMainExecutor(context)) { recordEvent ->
                 when (recordEvent) {
-                    is VideoRecordEvent.Start -> {
-                        videoCaptureButton.apply {
-                            text = context.getString(R.string.stop_capture)
-                            isEnabled = true
-                        }
-                    }
                     is VideoRecordEvent.Finalize -> {
                         if (!recordEvent.hasError()) {
                             val msg = "Video capture succeeded: ${recordEvent.outputResults.outputUri}"
@@ -143,10 +133,6 @@ class CameraHelper(private val context: Context) {
                             recording?.close()
                             recording = null
                             errorLog("Video capture ends with error: ${recordEvent.error}")
-                        }
-                        videoCaptureButton.apply {
-                            text = context.getString(R.string.start_capture)
-                            isEnabled = true
                         }
                     }
                 }

@@ -14,11 +14,11 @@ import com.example.celestialx.databinding.VideoFragmentBinding
 
 import android.os.Handler
 import android.os.Looper
-import android.widget.Button
+import android.util.Log
+import android.widget.ImageView
 
 class VideoFragment : Fragment() {
     private lateinit var cameraHelper: CameraHelper
-    private lateinit var recordingButton: Button
     private var timerHandler: Handler? = null
     private var recordingStartTime: Long = 0
     private var isRecording = false
@@ -35,11 +35,16 @@ class VideoFragment : Fragment() {
 
         val timerTextView: TextView = binding.timer
 
-        recordingButton = binding.videoFooter.captureButton;
         binding.videoFooter.captureButton.setOnClickListener {
             if (isRecording) {
+                binding.videoFooter.captureButton.apply {
+                    setImageResource(R.drawable.circle_156)
+                }
                 stopRecording(timerTextView)
             } else {
+                binding.videoFooter.captureButton.apply {
+                    setImageResource(R.drawable.circle_156_red)
+                }
                 startRecording(timerTextView)
             }
         }
@@ -48,9 +53,9 @@ class VideoFragment : Fragment() {
             walker.navigate(R.id.action_video_to_photo)
         }
 
-        binding.cameraSwitcher.setOnClickListener {
+        binding.videoFooter.cameraSwitcher.setOnClickListener {
             cameraHelper.switchCamera()
-            binding.cameraSwitcher.scaleX = if (binding.cameraSwitcher.scaleX == 1f) -1f else 1f
+            binding.videoFooter.cameraSwitcher.scaleX = if (binding.videoFooter.cameraSwitcher.scaleX == 1f) -1f else 1f
         }
 
         binding.videoFooter.galleryButton.setOnClickListener {
@@ -61,7 +66,7 @@ class VideoFragment : Fragment() {
     }
 
     private fun startRecording(timerTextView: TextView) {
-        cameraHelper.captureVideo(recordingButton)
+        cameraHelper.captureVideo()
         timerTextView.visibility = View.VISIBLE
 
         isRecording = true
@@ -80,8 +85,7 @@ class VideoFragment : Fragment() {
     }
 
     private fun stopRecording(timerTextView: TextView) {
-        cameraHelper.captureVideo(recordingButton)
-
+        cameraHelper.captureVideo()
         isRecording = false
         timerHandler?.removeCallbacksAndMessages(null)
         timerTextView.text = "00:00"

@@ -28,15 +28,16 @@ class PhotoFragment : Fragment() {
         binding.photoFooter.captureButton.setOnClickListener {
             cameraHelper.takePhoto()
             triggerBlinkEffect(binding.blank)
+            triggerBlinkEffect(binding.photoFooter.root)
         }
 
         binding.switchButton.setOnClickListener {
             walker.navigate(R.id.action_photo_to_video)
         }
 
-        binding.cameraSwitcher.setOnClickListener {
+        binding.photoFooter.cameraSwitcher.setOnClickListener {
             cameraHelper.switchCamera()
-            binding.cameraSwitcher.scaleX = if (binding.cameraSwitcher.scaleX == 1f) -1f else 1f
+            binding.photoFooter.cameraSwitcher.scaleX = if (binding.photoFooter.cameraSwitcher.scaleX == 1f) -1f else 1f
         }
 
         binding.photoFooter.galleryButton.setOnClickListener {
